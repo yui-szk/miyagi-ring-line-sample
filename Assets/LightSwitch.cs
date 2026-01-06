@@ -6,7 +6,7 @@ using System.Linq;
 public class LightSwitch : MonoBehaviour
 {
     public GameObject flashLight;
-    public float mouseSensitivity = 0.5f; // マウスの感度
+    public float mouseSensitivity = 1.0f; // マウスの感度
 
     private Vector2 currentRotation = Vector2.zero; // 現在の回転角度
 
