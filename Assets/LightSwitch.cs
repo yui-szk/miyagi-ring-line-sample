@@ -31,8 +31,13 @@ public class LightSwitch : MonoBehaviour
                 // 回転角度をリセット
                 currentRotation = Vector2.zero;
             
-                // ライトの回転を初期状態に戻す
-                flashLight.transform.rotation = Quaternion.identity;
+                // 親オブジェクトを取得（存在する場合）
+                Transform targetTransform = flashLight.transform.parent != null 
+                    ? flashLight.transform.parent 
+                    : flashLight.transform;
+            
+                // 親オブジェクトごと回転を初期状態に戻す
+                targetTransform.rotation = Quaternion.identity;
             }
         }
 
@@ -48,8 +53,13 @@ public class LightSwitch : MonoBehaviour
             // X軸の回転を-90度から90度に制限（上下の回転制限）
             currentRotation.x = Mathf.Clamp(currentRotation.x, -90f, 90f);
             
-            // ライトの回転を適用
-            flashLight.transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, 0f);
+            // 親オブジェクトを取得（存在する場合）
+            Transform targetTransform = flashLight.transform.parent != null 
+                ? flashLight.transform.parent 
+                : flashLight.transform;
+            
+            // 親オブジェクトごと回転を適用
+            targetTransform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, 0f);
         }
     }
 
