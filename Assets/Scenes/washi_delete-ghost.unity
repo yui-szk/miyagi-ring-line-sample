@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightSwitch
   flashLight: {fileID: 1867605006}
-  mouseSensitivity: 2
+  mouseSensitivity: 1
 --- !u!4 &1638509 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3a23acd14b9c94147b7837954a98dcf4, type: 3}
@@ -1152,7 +1152,7 @@ GameObject:
   - component: {fileID: 1815637905}
   - component: {fileID: 1815637904}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Washi Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
