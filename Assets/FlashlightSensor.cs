@@ -20,10 +20,10 @@ public class FlashlightSensor : MonoBehaviour
         }
     }
 
-    // デバッグ用にシーン画面で線を表示
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(transform.position, transform.forward * range);
-    }
+    // Debug: デバッグ用にシーン画面で線を表示
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawRay(transform.position, transform.forward * range);
+    // }
 }
