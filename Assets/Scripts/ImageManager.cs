@@ -5,7 +5,7 @@ public class ImageManager : MonoBehaviour
 {
     public GameObject imagePrefab; // 表示したい画像のプレハブ
     public float spawnInterval = 3.0f; // 何秒ごとに表示するか
-    public Vector2 spawnRangeX = new Vector2(-5.5f, 5.5f); // 表示範囲 X
+    public Vector2 spawnRangeX = new Vector2(-5.0f, 5.0f); // 表示範囲 X
     public Vector2 spawnRangeY = new Vector2(0.7f, 6.0f); // 表示範囲 Y
 
     void Start()
