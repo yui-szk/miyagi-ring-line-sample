@@ -70,7 +70,7 @@ public class LightSwitch : MonoBehaviour
 
         foreach (var device in InputSystem.devices)
         {
-            if (device.name.Contains("Joy-Con"))
+            if (device.name.Contains("Joy-Con") || device.name.Contains("Wireless Gamepad"))
             {
                 // あなたの環境では "hat" という名前でスティック入力が届いています
                 var hatControl = device["hat"] as InputControl<Vector2>;
@@ -95,8 +95,8 @@ public class LightSwitch : MonoBehaviour
             // スティック操作は deltaTime と強めの倍率を掛けるのがコツです
             float speed = mouseSensitivity * Time.deltaTime * 30f; 
             
-            currentRotation.y += stickInput.x * speed;
-            currentRotation.x -= stickInput.y * speed; // 上下反転させたい場合はここを += に
+            currentRotation.y -= stickInput.x * speed;
+            currentRotation.x += stickInput.y * speed; // 上下反転させたい場合はここを += に
             
             currentRotation.x = Mathf.Clamp(currentRotation.x, -90f, 90f);
 
