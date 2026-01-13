@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -42,8 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 0
@@ -234,10 +231,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 348388814834754545, guid: db856614d2922e6469b43c94a783093f, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 1566928192642094364, guid: db856614d2922e6469b43c94a783093f, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 2922021966758748742, guid: db856614d2922e6469b43c94a783093f, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 5793326560965867632, guid: db856614d2922e6469b43c94a783093f, type: 3}
       propertyPath: m_Name
       value: RESULT
@@ -326,6 +331,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9121008699735374513, guid: db856614d2922e6469b43c94a783093f, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -404,43 +413,43 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[0]
+      propertyPath: 'kanjiSprites.Array.data[0]'
       value: 
       objectReference: {fileID: 21300000, guid: 36bab349497e1af4098800291487e067, type: 3}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[1]
+      propertyPath: 'kanjiSprites.Array.data[1]'
       value: 
       objectReference: {fileID: 21300000, guid: b3fcf391d0cb309488411c84d62d94d1, type: 3}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[2]
+      propertyPath: 'kanjiSprites.Array.data[2]'
       value: 
       objectReference: {fileID: 21300000, guid: 304bbe065812a8d4e891d5beadd40aee, type: 3}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[3]
+      propertyPath: 'kanjiSprites.Array.data[3]'
       value: 
       objectReference: {fileID: 21300000, guid: f8d1be92ae0e72a4a83f46f6a80e4c0c, type: 3}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[4]
+      propertyPath: 'kanjiSprites.Array.data[4]'
       value: 
       objectReference: {fileID: 21300000, guid: 6a05422363a11cc4a8a07776820d150e, type: 3}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[5]
+      propertyPath: 'kanjiSprites.Array.data[5]'
       value: 
       objectReference: {fileID: 21300000, guid: 84d2f14bbd85ced419da8ca11fe79cfe, type: 3}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[6]
+      propertyPath: 'kanjiSprites.Array.data[6]'
       value: 
       objectReference: {fileID: 21300000, guid: cb7a1fe383c7c0144a37ba261ed61e0b, type: 3}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[7]
+      propertyPath: 'kanjiSprites.Array.data[7]'
       value: 
       objectReference: {fileID: 21300000, guid: 8b1eed4b742b2a24792783a9950c34e2, type: 3}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[8]
+      propertyPath: 'kanjiSprites.Array.data[8]'
       value: 
       objectReference: {fileID: 21300000, guid: 51f4af435f07ab54b911669d510a546f, type: 3}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
-      propertyPath: kanjiSprites.Array.data[9]
+      propertyPath: 'kanjiSprites.Array.data[9]'
       value: 
       objectReference: {fileID: 21300000, guid: 6f2185790e8180c45aee9fef6987795b, type: 3}
     m_RemovedComponents: []
@@ -460,6 +469,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 5417815327694245579, guid: db9129c8338574f43be25a32f921c024, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 7124171272931892682, guid: db9129c8338574f43be25a32f921c024, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -665,6 +678,10 @@ PrefabInstance:
     - target: {fileID: 3971666301200668839, guid: cae71155db1a64c4d9837ea5ec2abd2f, type: 3}
       propertyPath: m_fontSizeBase
       value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 3971666301200668839, guid: cae71155db1a64c4d9837ea5ec2abd2f, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 4067864336057344657, guid: cae71155db1a64c4d9837ea5ec2abd2f, type: 3}
       propertyPath: smooth
