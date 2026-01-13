@@ -13,6 +13,12 @@ public class FlashlightSensor : MonoBehaviour
             // 当たったオブジェクトのタグを確認
             if (hit.collider.CompareTag("TargetImage"))
             {
+                // スコアを加算
+                if (ScoreManager.Instance != null)
+                {
+                    ScoreManager.Instance.AddScore(1);
+                }
+
                 // 画像を削除（または非表示）
                 Destroy(hit.collider.gameObject);
                 Debug.Log("画像を消去しました！");
