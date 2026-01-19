@@ -7,7 +7,7 @@ public class ResultSceneManager : MonoBehaviour
     [Header("Score UI")]
     public TextMeshProUGUI scoreText;
 
-    [Header("Slide RootiƒXƒ‰ƒCƒh‚³‚¹‚éej")]
+    [Header("Slide Rootï¼ˆã‚¹ãƒ©ã‚¤ãƒ‰ã•ã›ã‚‹è¦ªï¼‰")]
     public RectTransform slideRoot;
     public float slideDistance = 1920f;
     public float slideDuration = 1.0f;
@@ -30,15 +30,15 @@ public class ResultSceneManager : MonoBehaviour
 
     void Start()
     {
-        // ---------- ‰Šú‰» ----------
+        // ---------- åˆæœŸåŒ– ----------
         scoreText.gameObject.SetActive(false);
 
         if (lowScoreObj != null) lowScoreObj.SetActive(false);
         if (midScoreObj != null) midScoreObj.SetActive(false);
         if (highScoreObj != null) highScoreObj.SetActive(false);
 
-        // ƒXƒRƒA•¶šİ’èi‚Ü‚¾•\¦‚µ‚È‚¢j
-        scoreText.text = GameManager.FinalScore.ToString();
+        // ã‚¹ã‚³ã‚¢æ–‡å­—è¨­å®šï¼ˆã¾ã è¡¨ç¤ºã—ãªã„ï¼‰
+        scoreText.text = GameManager_Sand.FinalScore.ToString();
 
         StartCoroutine(ResultSequence());
     }
@@ -46,27 +46,27 @@ public class ResultSceneManager : MonoBehaviour
     // =============================
     IEnumerator ResultSequence()
     {
-        // ‡@ ­‚µ‘Ò‚Â
+        // â‘  å°‘ã—å¾…ã¤
         yield return new WaitForSeconds(0.8f);
 
-        // ‡A ”š•\¦ ¨ ƒhƒ“ƒb
+        // â‘¡ æ•°å­—è¡¨ç¤º â†’ ãƒ‰ãƒ³ãƒƒ
         scoreText.gameObject.SetActive(true);
         yield return StartCoroutine(PunchFontSize(scoreText));
 
-        // ‡B ŠÔ
+        // â‘¢ é–“
         yield return new WaitForSeconds(0.5f);
 
-        // ‡C ƒXƒ‰ƒCƒh
+        // â‘£ ã‚¹ãƒ©ã‚¤ãƒ‰
         yield return StartCoroutine(Slide());
 
-        // ‡D ƒXƒRƒA•Ê•\¦•ƒJƒƒ‰‰‰o
+        // â‘¤ ã‚¹ã‚³ã‚¢åˆ¥è¡¨ç¤ºï¼†ã‚«ãƒ¡ãƒ©æ¼”å‡º
         ShowResultByScore();
     }
 
     // =============================
     void ShowResultByScore()
     {
-        int score = GameManager.FinalScore;
+        int score = GameManager_Sand.FinalScore;
 
         if (score >= highScoreBorder)
         {
@@ -110,7 +110,7 @@ public class ResultSceneManager : MonoBehaviour
     }
 
     // =============================
-    // Scale‚ğG‚ç‚¸AfontSize‚Åƒhƒ“ƒb
+    // Scaleã‚’è§¦ã‚‰ãšã€fontSizeã§ãƒ‰ãƒ³ãƒƒ
     IEnumerator PunchFontSize(TextMeshProUGUI text)
     {
         float baseSize = text.fontSize;

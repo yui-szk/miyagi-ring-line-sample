@@ -30,7 +30,7 @@ public class CommentController : MonoBehaviour
     {
         yield return new WaitForSeconds(showDelay);
 
-        int score = GameManager.FinalScore;
+        int score = GameManager_Sand.FinalScore;
 
         if (score >= highScoreBorder)
             highScoreComment.gameObject.SetActive(true);

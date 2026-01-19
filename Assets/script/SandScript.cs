@@ -2,28 +2,28 @@ using UnityEngine;
 
 public class SandScript : MonoBehaviour
 {
-    [Header("ƒ^ƒOİ’è")]
-    public string vesselTag = "Vessel";  // Ší‚Ìƒ^ƒO
-    public string groundTag = "Ground";  // ’n–Ê‚Ìƒ^ƒO
+    [Header("ã‚¿ã‚°è¨­å®š")]
+    public string vesselTag = "Vessel";  // å™¨ã®ã‚¿ã‚°
+    public string groundTag = "Ground";  // åœ°é¢ã®ã‚¿ã‚°
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(vesselTag))
         {
-            // Ší‚ÉG‚ê‚½‚ç»‚ğ”j‰ó
+            // å™¨ã«è§¦ã‚ŒãŸã‚‰ç ‚ã‚’ç ´å£Š
             Destroy(gameObject);
 
-            // GameManager ‚ª‘¶İ‚·‚éê‡‚ÍƒXƒRƒA‰ÁZ
-            if (GameManager.Instance != null)
+            // GameManager ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯ã‚¹ã‚³ã‚¢åŠ ç®—
+            if (GameManager_Sand.Instance != null)
             {
-                GameManager.Instance.AddScore(1);
+                GameManager_Sand.Instance.AddScore(1);
             }
 
-            Debug.Log("»‚ğƒLƒƒƒbƒ`‚µ‚Ü‚µ‚½I");
+            Debug.Log("ç ‚ã‚’ã‚­ãƒ£ãƒƒãƒã—ã¾ã—ãŸï¼");
         }
         else if (other.CompareTag(groundTag))
         {
-            // ’n–Ê‚É—‚¿‚½»‚à”j‰ó‚µ‚Äd‚­‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+            // åœ°é¢ã«è½ã¡ãŸç ‚ã‚‚ç ´å£Šã—ã¦é‡ããªã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
             Destroy(gameObject);
         }
     }
