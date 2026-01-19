@@ -41,6 +41,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Talk_Take.unity
     guid: b31c6ebfe537d2242b84c9176d185926
+  - enabled: 1
+    path: Assets/Scenes/sakuragame2.unity
+    guid: 57c361abc57f33646b1c2b55c370a73f
+  - enabled: 1
+    path: Assets/Scenes/sandgame_play.unity
+    guid: e8e3ab30f04868a4fb53cdbf8b2f603c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
