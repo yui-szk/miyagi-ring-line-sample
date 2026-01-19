@@ -4,19 +4,19 @@ public class JoyconPointerController : MonoBehaviour
 {
     Joycon joycon;
 
-    [Header("Š´“xiæ’[•ûŒü¨‰æ–ÊÀ•Wj")]
-    public float sensitivity = 8.0f;   // ‘å‚«‚¢‚Ù‚Ç“®‚­
-    public float smooth = 12f;         // ‘å‚«‚¢‚Ù‚ÇŠŠ‚ç‚©
+    [Header("ï¿½ï¿½ï¿½xï¿½iï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êï¿½ï¿½Wï¿½j")]
+    public float sensitivity = 8.0f;   // ï¿½å‚«ï¿½ï¿½ï¿½Ù‚Ç“ï¿½ï¿½ï¿½
+    public float smooth = 12f;         // ï¿½å‚«ï¿½ï¿½ï¿½Ù‚ÇŠï¿½ï¿½ç‚©
 
-    [Header("‰æ–Ê“à‚É§ŒÀiƒ[ƒ‹ƒhÀ•Wj")]
+    [Header("ï¿½ï¿½Ê“ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Wï¿½j")]
     public Vector2 minLimit = new Vector2(-8f, -4.5f);
     public Vector2 maxLimit = new Vector2(8f, 4.5f);
 
-    [Header("c‚¿•â³")]
+    [Header("ï¿½cï¿½ï¿½ï¿½ï¿½ï¿½â³")]
     public bool invertX = false;
-    public bool invertY = true;        // c‚¿‚¾‚Æã‰º‚ª‹t‚É‚È‚è‚â‚·‚¢‚Ì‚Å‰Šútrue„§
+    public bool invertY = true;        // ï¿½cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æã‰ºï¿½ï¿½ï¿½tï¿½É‚È‚ï¿½â‚·ï¿½ï¿½ï¿½Ì‚Åï¿½ï¿½ï¿½trueï¿½ï¿½ï¿½ï¿½
 
-    Quaternion baseRot = Quaternion.identity;   // R‚ÅŠî€
+    Quaternion baseRot = Quaternion.identity;   // Rï¿½ÅŠî€
     Vector3 velocity = Vector3.zero;
     Vector3 startPos;
 
@@ -24,7 +24,7 @@ public class JoyconPointerController : MonoBehaviour
     {
         if (JoyconManager.Instance == null || JoyconManager.Instance.j.Count == 0)
         {
-            Debug.LogError("Joy-Con ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
+            Debug.LogError("Joy-Con ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
             enabled = false;
             return;
         }
@@ -32,7 +32,7 @@ public class JoyconPointerController : MonoBehaviour
         joycon = JoyconManager.Instance.j[0];
         startPos = transform.position;
 
-        // Å‰‚É1‰ñƒZƒ“ƒ^[‚ğæ‚Á‚Ä‚¨‚­
+        // ï¿½Åï¿½ï¿½ï¿½1ï¿½ï¿½Zï¿½ï¿½ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
         baseRot = joycon.GetVector();
     }
 
@@ -40,7 +40,7 @@ public class JoyconPointerController : MonoBehaviour
     {
         if (joycon == null) return;
 
-        // RiSHOULDER_1j‚ÅƒZƒ“ƒ^[iŠî€p¨j‚ğÄæ“¾•ƒ|ƒCƒ“ƒ^’†‰›‚Ö
+        // Rï¿½iSHOULDER_1ï¿½jï¿½ÅƒZï¿½ï¿½ï¿½^ï¿½[ï¿½iï¿½î€ï¿½pï¿½ï¿½ï¿½jï¿½ï¿½ï¿½Äæ“¾ï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (joycon.GetButtonDown(Joycon.Button.SHOULDER_1))
         {
             baseRot = joycon.GetVector();
@@ -49,18 +49,18 @@ public class JoyconPointerController : MonoBehaviour
             return;
         }
 
-        // Œ»İ‚Ìp¨
+        // ï¿½ï¿½ï¿½İ‚Ìpï¿½ï¿½
         Quaternion rot = joycon.GetVector();
 
-        // Šî€p¨‚©‚ç‚Ì‘Š‘Î‰ñ“]iR‚ÅƒZƒ“ƒ^[j
+        // ï¿½î€ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Î‰ï¿½]ï¿½iRï¿½ÅƒZï¿½ï¿½ï¿½^ï¿½[ï¿½j
         Quaternion rel = Quaternion.Inverse(baseRot) * rot;
 
-        // Joy-Con‚Ìuæ’[•ûŒüv‚ğŒˆ‚ß‚é
-        // ‚±‚±‚Íƒ‰ƒCƒuƒ‰ƒŠ/‚¿•û‚Å²‚ªƒYƒŒ‚é‚Ì‚Å’²®ƒ|ƒCƒ“ƒg
-        // rel * Vector3.forward ‚ğŠî–{‚ÉA‡‚í‚È‚¯‚ê‚Î up/right ‚ğ‚·
+        // Joy-Conï¿½Ìuï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Íƒï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½Yï¿½ï¿½ï¿½ï¿½Ì‚Å’ï¿½ï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½g
+        // rel * Vector3.forward ï¿½ï¿½ï¿½ï¿½{ï¿½ÉAï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ up/right ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Vector3 dir = rel * Vector3.forward;
 
-        // ‰æ–Ê•½–Ê‚Ö‚Ì“Š‰eFx,y¬•ª‚ğg‚Á‚ÄÀ•W‚É‚·‚é
+        // ï¿½ï¿½Ê•ï¿½ï¿½Ê‚Ö‚Ì“ï¿½ï¿½eï¿½Fx,yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Äï¿½ï¿½Wï¿½É‚ï¿½ï¿½ï¿½
         float x = dir.x * sensitivity;
         float y = dir.y * sensitivity;
 
@@ -69,11 +69,11 @@ public class JoyconPointerController : MonoBehaviour
 
         Vector3 targetPos = new Vector3(startPos.x + x, startPos.y + y, 0f);
 
-        // ‰æ–ÊŠO‚Éo‚È‚¢‚æ‚¤§ŒÀ
+        // ï¿½ï¿½ÊŠOï¿½Éoï¿½È‚ï¿½ï¿½æ‚¤ï¿½ï¿½ï¿½ï¿½
         targetPos.x = Mathf.Clamp(targetPos.x, minLimit.x, maxLimit.x);
         targetPos.y = Mathf.Clamp(targetPos.y, minLimit.y, maxLimit.y);
 
-        // ƒXƒ€[ƒYˆÚ“®
+        // ï¿½Xï¿½ï¿½ï¿½[ï¿½Yï¿½Ú“ï¿½
         transform.position = Vector3.SmoothDamp(
             transform.position,
             targetPos,

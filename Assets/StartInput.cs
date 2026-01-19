@@ -8,7 +8,7 @@ public class StartInput : MonoBehaviour
     {
         if (JoyconManager.Instance == null || JoyconManager.Instance.j.Count == 0)
         {
-            Debug.LogError("Joy-Con ‚ª‚ ‚è‚Ü‚¹‚ñ");
+            Debug.LogError("Joy-Con ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
             enabled = false;
             return;
         }
@@ -17,7 +17,7 @@ public class StartInput : MonoBehaviour
 
     void Update()
     {
-        // Aƒ{ƒ^ƒ“i‰Ej‚Å GAME‚Ö
+        // Aï¿½{ï¿½^ï¿½ï¿½ï¿½iï¿½Eï¿½jï¿½ï¿½ GAMEï¿½ï¿½
         if (joycon.GetButtonDown(Joycon.Button.DPAD_RIGHT))
         {
             GameManager.Instance.ShowGame();

@@ -8,18 +8,18 @@ public class JoyconButtonTest : MonoBehaviour
     {
         if (JoyconManager.Instance == null)
         {
-            Debug.LogError("JoyconManager ‚ª‚ ‚è‚Ü‚¹‚ñ");
+            Debug.LogError("JoyconManager ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
             return;
         }
 
         if (JoyconManager.Instance.j.Count == 0)
         {
-            Debug.LogError("Joy-Con ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
+            Debug.LogError("Joy-Con ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
             return;
         }
 
         joycon = JoyconManager.Instance.j[0];
-        Debug.Log("Joy-Con ŒŸo¬Œ÷i‘Sƒ{ƒ^ƒ“ƒeƒXƒgŠJnj");
+        Debug.Log("Joy-Con ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½iï¿½Sï¿½{ï¿½^ï¿½ï¿½ï¿½eï¿½Xï¿½gï¿½Jï¿½nï¿½j");
     }
 
     void Update()

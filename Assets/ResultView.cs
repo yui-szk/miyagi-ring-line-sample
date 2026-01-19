@@ -8,6 +8,6 @@ public class ResultView : MonoBehaviour
     void OnEnable()
     {
         if (resultText == null) return;
-        resultText.text = $"³Šm“xF{GameManager.Instance.lastAccuracy:F1}%";
+        resultText.text = $"ï¿½ï¿½ï¿½mï¿½xï¿½F{GameManager.Instance.lastAccuracy:F1}%";
     }
 }
