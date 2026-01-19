@@ -30,11 +30,11 @@ public class TextWindowAppearance : MonoBehaviour
         if (!isDisplayed)
         {
             timer += Time.deltaTime;
-            Debug.Log("Timer: " + timer);
+            // Debug.Log("Timer: " + timer);
 
             if (timer >= displayDelay)
             {
-                Debug.Log("Displaying window now.");
+                // Debug.Log("Displaying window now.");
                 AppearanceTextWindow.SetActive(true);
                 AppearanceNameWindow.SetActive(true);
                 NAME.gameObject.SetActive(true);

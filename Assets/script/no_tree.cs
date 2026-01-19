@@ -1,153 +1,125 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
-public class NoTreeAlongTrainRoute : MonoBehaviour
+public class MassPlaceTreesAvoidMovingTrain : MonoBehaviour
 {
-    [Header("Terrain")]
+    [Header("Terrain & Tree Settings")]
     public Terrain terrain;
+    public int numberOfTrees = 1000;
 
-    [Header("Tree Settings")]
-    public int numberOfTrees = 2000;
-    public float minScale = 0.8f;
-    public float maxScale = 1.5f;
+    [Header("Train Settings")]
+    public GameObject train;
+    public float trainPadding = 2f;
 
-    [Header("Train Route (Catmull-Rom)")]
-    public Transform[] routePoints;
-    public float routeClearRadius = 20f;   // 線路から何m木を消すか
-    public float sampleStep = 0.05f;       // 小さいほど正確（0.02〜0.1）
-
-    TerrainData terrainData;
-    List<Vector3> sampledRoutePoints = new List<Vector3>();
+    private BoxCollider trainCollider;
+    private TerrainData terrainData;
+    private List<int> treeIndicesToRemove = new List<int>();
 
     void Start()
     {
-        if (!terrain)
-            terrain = Terrain.activeTerrain;
-
-        if (!terrain || routePoints == null || routePoints.Length < 4)
+        if (terrain == null)
         {
-            Debug.LogError("Terrain または RoutePoints が正しく設定されていません");
-            return;
+            terrain = Terrain.activeTerrain;
+            if (terrain == null)
+            {
+                Debug.LogError("Scene Terrain not found");
+                return;
+            }
         }
 
         terrainData = terrain.terrainData;
 
-        SampleRoute();     // ★ 曲線を細かくサンプリング
-        PlaceTrees();      // ★ 木を配置（ルート除外）
+        if (train != null)
+        {
+            trainCollider = train.GetComponent<BoxCollider>();
+            if (trainCollider == null)
+            {
+                Debug.LogError("Train BoxCollider not found");
+                return;
+            }
+        }
+
+        PlaceTrees();
     }
 
-    // ==================================================
-    // ① 曲線サンプリング（Catmull-Rom）
-    // ==================================================
-    void SampleRoute()
+    void Update()
     {
-        sampledRoutePoints.Clear();
-
-        int count = routePoints.Length;
-
-        for (int i = 0; i < count; i++)
+        if (trainCollider != null)
         {
-            Vector3 p0 = routePoints[(i - 1 + count) % count].position;
-            Vector3 p1 = routePoints[i].position;
-            Vector3 p2 = routePoints[(i + 1) % count].position;
-            Vector3 p3 = routePoints[(i + 2) % count].position;
-
-            for (float t = 0; t < 1f; t += sampleStep)
-            {
-                Vector3 pos = CatmullRom(p0, p1, p2, p3, t);
-                sampledRoutePoints.Add(pos);
-            }
+            RemoveTreesInsideTrain();
         }
     }
 
-    // ==================================================
-    // ② 木の配置（ルート回避）
-    // ==================================================
     void PlaceTrees()
     {
-        List<TreeInstance> trees = new List<TreeInstance>();
-
-        int placed = 0;
+        int placedCount = 0;
         int attempts = 0;
 
-        while (placed < numberOfTrees && attempts < numberOfTrees * 10)
+        while (placedCount < numberOfTrees && attempts < numberOfTrees * 10)
         {
             attempts++;
 
             float x = Random.Range(0f, terrainData.size.x);
             float z = Random.Range(0f, terrainData.size.z);
+            float y = terrain.SampleHeight(new Vector3(x, 0, z)) + terrain.transform.position.y;
+            Vector3 worldPos = new Vector3(x, y, z) + terrain.transform.position;
 
-            Vector3 worldPos =
-                terrain.transform.position +
-                new Vector3(x, 0f, z);
-
-            // ★ ルート近くなら配置しない
-            if (IsNearRouteXZ(worldPos))
-                continue;
-
-            TreeInstance tree = new TreeInstance
+            if (trainCollider != null)
             {
-                position = new Vector3(
-                    x / terrainData.size.x,
-                    0f,
-                    z / terrainData.size.z
-                ),
-                prototypeIndex = 0,
-                widthScale = Random.Range(minScale, maxScale),
-                heightScale = Random.Range(minScale, maxScale),
-                color = Color.white,
-                lightmapColor = Color.white
-            };
+                Bounds paddedBounds = trainCollider.bounds;
+                paddedBounds.Expand(trainPadding);
+                if (paddedBounds.Contains(worldPos))
+                {
+                    continue;
+                }
+            }
 
-            trees.Add(tree);
-            placed++;
+            TreeInstance treeInstance = new TreeInstance();
+            treeInstance.position = new Vector3(
+                x / terrainData.size.x,
+                0,
+                z / terrainData.size.z
+            );
+            treeInstance.prototypeIndex = 0;
+            treeInstance.widthScale = 1f;
+            treeInstance.heightScale = 1f;
+            treeInstance.color = Color.white;
+            treeInstance.lightmapColor = Color.white;
+
+            terrain.AddTreeInstance(treeInstance);
+            placedCount++;
         }
 
-        terrainData.treeInstances = trees.ToArray();
-        Debug.Log($"木配置完了: {placed} 本");
+        Debug.Log($"Placed Trees: {placedCount}");
     }
 
-    // ==================================================
-    // ③ XZ平面のみで距離判定（重要）
-    // ==================================================
-    bool IsNearRouteXZ(Vector3 worldPos)
+    void RemoveTreesInsideTrain()
     {
-        Vector2 wp = new Vector2(worldPos.x, worldPos.z);
+        TreeInstance[] trees = terrain.terrainData.treeInstances;
+        treeIndicesToRemove.Clear();
 
-        foreach (var p in sampledRoutePoints)
+        for (int i = 0; i < trees.Length; i++)
         {
-            Vector2 rp = new Vector2(p.x, p.z);
+            Vector3 worldPos = Vector3.Scale(trees[i].position, terrainData.size) + terrain.transform.position;
+            Bounds paddedBounds = trainCollider.bounds;
+            paddedBounds.Expand(trainPadding);
 
-            if (Vector2.Distance(wp, rp) < routeClearRadius)
-                return true;
+            if (paddedBounds.Contains(worldPos))
+            {
+                treeIndicesToRemove.Add(i);
+            }
         }
-        return false;
-    }
 
-    // ==================================================
-    // ④ Catmull-Rom 補間
-    // ==================================================
-    Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
-    {
-        return 0.5f *
-            ((2f * p1) +
-            (-p0 + p2) * t +
-            (2f * p0 - 5f * p1 + 4f * p2 - p3) * t * t +
-            (-p0 + 3f * p1 - 3f * p2 + p3) * t * t * t);
-    }
-
-    // ==================================================
-    // ⑤ ルート可視化（Scene確認用）
-    // ==================================================
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-
-        if (sampledRoutePoints == null) return;
-
-        foreach (var p in sampledRoutePoints)
+        if (treeIndicesToRemove.Count > 0)
         {
-            Gizmos.DrawSphere(p, 0.5f);
+            List<TreeInstance> newTrees = new List<TreeInstance>(trees);
+            treeIndicesToRemove.Sort((a, b) => b.CompareTo(a));
+            foreach (int index in treeIndicesToRemove)
+            {
+                newTrees.RemoveAt(index);
+            }
+
+            terrain.terrainData.treeInstances = newTrees.ToArray();
         }
     }
 }

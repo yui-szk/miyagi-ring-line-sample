@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -25,74 +25,52 @@ public class JoyconManager: MonoBehaviour
         get { return instance; }
     }
 
-   void Awake()
-   {
-    // --- シングルトンパターンの実装 ---
-    if (instance != null && instance != this)
+    void Awake()
     {
-        Destroy(gameObject);
-        return;
+        if (instance != null) Destroy(gameObject);
+        instance = this;
+		int i = 0;
+
+		j = new List<Joycon>();
+		bool isLeft = false;
+		HIDapi.hid_init();
+
+		IntPtr ptr = HIDapi.hid_enumerate(vendor_id, 0x0);
+		IntPtr top_ptr = ptr;
+
+		if (ptr == IntPtr.Zero)
+		{
+			ptr = HIDapi.hid_enumerate(vendor_id_, 0x0);
+			if (ptr == IntPtr.Zero)
+			{ 
+				HIDapi.hid_free_enumeration(ptr);
+				Debug.Log ("No Joy-Cons found!");
+			}
+		}
+		hid_device_info enumerate;
+		while (ptr != IntPtr.Zero) {
+			enumerate = (hid_device_info)Marshal.PtrToStructure (ptr, typeof(hid_device_info));
+
+			Debug.Log (enumerate.product_id);
+				if (enumerate.product_id == product_l || enumerate.product_id == product_r) {
+					if (enumerate.product_id == product_l) {
+						isLeft = true;
+						Debug.Log ("Left Joy-Con connected.");
+					} else if (enumerate.product_id == product_r) {
+						isLeft = false;
+						Debug.Log ("Right Joy-Con connected.");
+					} else {
+						Debug.Log ("Non Joy-Con input device skipped.");
+					}
+					IntPtr handle = HIDapi.hid_open_path (enumerate.path);
+					HIDapi.hid_set_nonblocking (handle, 1);
+					j.Add (new Joycon (handle, EnableIMU, EnableLocalize & EnableIMU, 0.05f, isLeft));
+					++i;
+				}
+				ptr = enumerate.next;
+			}
+		HIDapi.hid_free_enumeration (top_ptr);
     }
-
-    instance = this;
-    // シーン遷移してもJoyconManagerを破壊しないように設定
-    DontDestroyOnLoad(gameObject);
-
-    int i = 0;
-    j = new List<Joycon>();
-    bool isLeft = false;
-    HIDapi.hid_init();
-
-    // デバイスの列挙を開始
-    IntPtr ptr = HIDapi.hid_enumerate(vendor_id, 0x0);
-    IntPtr top_ptr = ptr;
-
-    if (ptr == IntPtr.Zero)
-    {
-        ptr = HIDapi.hid_enumerate(vendor_id_, 0x0);
-        if (ptr == IntPtr.Zero)
-        { 
-            HIDapi.hid_free_enumeration(ptr);
-            Debug.Log("No Joy-Cons found!");
-            return; // デバイスが見つからない場合はここで終了
-        }
-    }
-
-    hid_device_info enumerate;
-    while (ptr != IntPtr.Zero)
-    {
-        enumerate = (hid_device_info)Marshal.PtrToStructure(ptr, typeof(hid_device_info));
-
-        Debug.Log(enumerate.product_id);
-
-        // Joy-Con (L) または (R) であるかを確認
-        if (enumerate.product_id == product_l || enumerate.product_id == product_r)
-        {
-            if (enumerate.product_id == product_l)
-            {
-                isLeft = true;
-                Debug.Log("Left Joy-Con connected.");
-            }
-            else
-            {
-                isLeft = false;
-                Debug.Log("Right Joy-Con connected.");
-            }
-
-            // デバイスのパスを開いて非ブロッキングモードに設定
-            IntPtr handle = HIDapi.hid_open_path(enumerate.path);
-            HIDapi.hid_set_nonblocking(handle, 1);
-            
-            // Joyconオブジェクトをリストに追加
-            j.Add(new Joycon(handle, EnableIMU, EnableLocalize & EnableIMU, 0.05f, isLeft));
-            ++i;
-        }
-        ptr = enumerate.next;
-    }
-
-    // 列挙に使用したメモリを解放
-    HIDapi.hid_free_enumeration(top_ptr);
-}
 
     void Start()
     {
