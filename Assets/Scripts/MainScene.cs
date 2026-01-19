@@ -33,6 +33,31 @@ public class MainScene : MonoBehaviour {
 
     void ChangeScene()
     {
-        SceneManager.LoadScene("washi_delete-ghost");
+        string currentScene = SceneManager.GetActiveScene().name;
+        string nextScene = "";
+
+        switch (currentScene)
+        {
+            case "train0":
+                nextScene = "Talk_Take";
+                break;
+            case "train1":
+                nextScene = "Talk_Garasu";
+                break;
+            case "train2":
+                nextScene = "Talk_Washi";
+                break;
+            case "train3":
+                nextScene = "Talk_Fude_Suzuri";
+                break;
+            default:
+                Debug.LogWarning("未定義のシーンからの遷移です: " + currentScene);
+                return;
+        }
+
+        if (!string.IsNullOrEmpty(nextScene))
+        {
+            SceneManager.LoadScene(nextScene);
+        }
     }
 }
