@@ -10,9 +10,9 @@ public class TunnelTrigger : MonoBehaviour
         {
             FadeManager.Instance.FadeAndLoadScene(
                 nextSceneName,
-                1f, // ƒtƒF[ƒhƒAƒEƒg
-                2.5f, // ˆÃˆÅ
-                1f  // ƒtƒF[ƒhƒCƒ“
+                1f, // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
+                2.5f, // æš—é—‡
+                1f  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
             );
         }
     }

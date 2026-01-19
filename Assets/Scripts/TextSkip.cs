@@ -13,6 +13,9 @@ public class TextSkip : MonoBehaviour
     [SerializeField] private string[] sentences;
 
     [SerializeField] private float TextAppearance = 1.5f;
+
+    // 遷移先シーン名
+    [SerializeField] private string nextSceneName = "KanjiGame";
     private Coroutine typingCoroutine;
     private bool isTyping = false;
 
@@ -91,12 +94,15 @@ public class TextSkip : MonoBehaviour
             }
             else
             {
-                Debug.Log("��b�I��");
+                Debug.Log("会話終了");
                 textUI.gameObject.SetActive(false);
                 if (Click != null)
                     Click.SetActive(false);
                 FadeBlack fade = FindObjectOfType<FadeBlack>();
-                fade.FadeIn_SceneEnd();
+                // シーン遷移
+                fade.FadeIn_SceneEnd(() => {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
+                });
             }
         }
     }
