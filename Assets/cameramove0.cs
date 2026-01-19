@@ -13,11 +13,10 @@ public class CameraController0 : MonoBehaviour
     public float moveDuration = 2.0f;
 
     [Header("Start Delay")]
-    public float startDelay = 1.5f;   // ★ 到着後に待つ秒数（Inspectorで調整）
+    public float startDelay = 1.5f;
 
     void Start()
     {
-        // 初期位置・角度
         transform.position = startPosition;
         transform.rotation = Quaternion.Euler(startRotation);
 
@@ -26,13 +25,10 @@ public class CameraController0 : MonoBehaviour
 
     IEnumerator CameraSequence()
     {
-        // ① カメラ移動
         yield return StartCoroutine(MoveCamera());
 
-        // ② 到着後 少し待つ
         yield return new WaitForSeconds(startDelay);
 
-        // ③ ゲーム開始
         if (GameManager_Sand.Instance != null)
         {
             GameManager_Sand.Instance.StartGame();

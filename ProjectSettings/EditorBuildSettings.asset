@@ -47,6 +47,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/sandgame_play.unity
     guid: e8e3ab30f04868a4fb53cdbf8b2f603c
+  - enabled: 1
+    path: Assets/Scenes/result_3types.unity
+    guid: 03bd485d9f4c5ea4f831c24098d2d14d
+  - enabled: 1
+    path: Assets/Scenes/result_sakura_3types.unity
+    guid: 4081bc6093677b8499b9c7be70a7fb94
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
