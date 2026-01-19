@@ -1,4 +1,4 @@
-
+#define DEBUG
 
 using System.Collections;
 using System.Collections.Generic;
@@ -367,7 +367,6 @@ public class Joycon
                     DebugPrint(string.Format("Duplicate timestamp dequeued. TS: {0:X2}", ts_de), DebugType.THREADING);
                 }
                 ts_de = report_buf[1];
-
                 ts_prev = rep.GetTime();
             }
             ProcessButtonsAndStick(report_buf);
