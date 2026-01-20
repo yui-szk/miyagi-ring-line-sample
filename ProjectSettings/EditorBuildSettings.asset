@@ -53,6 +53,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/result_sakura_3types.unity
     guid: 4081bc6093677b8499b9c7be70a7fb94
+  - enabled: 1
+    path: Assets/Scenes/Talk_Fude_Suzuri.unity
+    guid: a63e2a1ef78e05b4a9379b8c06c61311
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
