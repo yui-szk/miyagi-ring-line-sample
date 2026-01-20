@@ -13,6 +13,7 @@ public class FadeBlack : MonoBehaviour
     [SerializeField] private TextMeshProUGUI NAME;
 
     public float displayDelay_SceneStart = 2.0f;
+    private bool isDisplayed;
 
     private float FadeTime = 0.8f;
 
@@ -70,5 +71,6 @@ public class FadeBlack : MonoBehaviour
         TextWindow.SetActive(true);
         NameWindow.SetActive(true);
         NAME.gameObject.SetActive(true);
+        isDisplayed = true;
     }
 }
