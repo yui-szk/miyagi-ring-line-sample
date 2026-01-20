@@ -1487,7 +1487,6 @@ MonoBehaviour:
     m_Unicode: 65306
     m_GlyphIndex: 1773
     m_Scale: 1
-<<<<<<< Updated upstream
   - m_ElementType: 1
     m_Unicode: 112
     m_GlyphIndex: 253
@@ -1540,8 +1539,6 @@ MonoBehaviour:
     m_Unicode: 25968
     m_GlyphIndex: 4486
     m_Scale: 1
-=======
->>>>>>> Stashed changes
   m_AtlasTextures:
   - {fileID: 8957166298961499682}
   m_AtlasTextureIndex: 0
