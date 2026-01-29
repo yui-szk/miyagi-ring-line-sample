@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -13,14 +12,30 @@ public class TextSkip : MonoBehaviour
     [SerializeField] private string[] sentences;
 
     [SerializeField] private float TextAppearance = 1.5f;
-
-    // 遷移先シーン名
     [SerializeField] private string nextSceneName = "KanjiGame";
+
     private Coroutine typingCoroutine;
     private bool isTyping = false;
-
     private int Index = 0;
     private bool isReady = false;
+
+    // ===== Joy-Con =====
+    Joycon joycon;
+    bool lastAState = false;
+
+    void Awake()
+    {
+        if (JoyconManager.Instance != null &&
+            JoyconManager.Instance.j.Count > 0)
+        {
+            joycon = JoyconManager.Instance.j[0];
+            Debug.Log("✅ Joycon assigned to TextSkip");
+        }
+        else
+        {
+            Debug.LogError("❌ Joycon not found in TextSkip");
+        }
+    }
 
     void Start()
     {
@@ -38,12 +53,9 @@ public class TextSkip : MonoBehaviour
 
     private void ShowSentence()
     {
-        //textUI.text = sentences[Index];
-
         if (typingCoroutine != null)
-        {
             StopCoroutine(typingCoroutine);
-        }
+
         typingCoroutine = StartCoroutine(TypeSentence(sentences[Index]));
     }
 
@@ -57,53 +69,65 @@ public class TextSkip : MonoBehaviour
             textUI.text += c;
             yield return new WaitForSeconds(0.05f);
         }
+
         isTyping = false;
         typingCoroutine = null;
-
-        if (Click != null)
-            Click.SetActive(true);
+        Click.SetActive(true);
     }
 
     void Update()
     {
         if (!isReady) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (IsJoyconAPressed())
         {
-            if (isTyping)
+            HandleNext();
+        }
+    }
+
+    // ===== Joy-Con Aボタン（高速ON/OFF対策済み）=====
+    bool IsJoyconAPressed()
+    {
+        if (joycon == null) return false;
+
+        // JoyconLibでは A = DPAD_RIGHT
+        bool current = joycon.GetButton(Joycon.Button.DPAD_RIGHT);
+
+        bool pressed = current && !lastAState;
+        lastAState = current;
+
+        return pressed;
+    }
+
+    void HandleNext()
+    {
+        if (isTyping)
+        {
+            if (typingCoroutine != null)
+                StopCoroutine(typingCoroutine);
+
+            textUI.text = sentences[Index];
+            isTyping = false;
+            Click.SetActive(true);
+            return;
+        }
+
+        Index++;
+
+        if (Index < sentences.Length)
+        {
+            Click.SetActive(false);
+            ShowSentence();
+        }
+        else
+        {
+            Debug.Log("会話終了");
+
+            FadeBlack fade = FindObjectOfType<FadeBlack>();
+            fade.FadeIn_SceneEnd(() =>
             {
-                if (typingCoroutine != null)
-                    StopCoroutine(typingCoroutine);
-
-                textUI.text = sentences[Index];
-                isTyping = false;
-
-                if (Click != null)
-                    Click.SetActive(true);
-                return;
-            }
-
-                Index++;
-
-            if (Index < sentences.Length)
-            {
-                if (Click != null)
-                    Click.SetActive(false);
-                ShowSentence();
-                //textUI.text = sentences[Index];
-            }
-            else
-            {
-                Debug.Log("会話終了");
-                textUI.gameObject.SetActive(false);
-                if (Click != null)
-                    Click.SetActive(false);
-                FadeBlack fade = FindObjectOfType<FadeBlack>();
-                // シーン遷移
-                fade.FadeIn_SceneEnd(() => {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
-                });
-            }
+                UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
+            });
         }
     }
 }
