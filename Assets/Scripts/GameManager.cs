@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     public Image kanjiImage;
     public Sprite[] kanjiSprites;
 
+    [Header("Return To Train")]
+    public ReturnToTrainController returnToTrainController;
+
+
     void Awake()
     {
         if (Instance != null)
@@ -28,6 +32,8 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+
+
 
         // ★未設定なら自動取得（非アクティブも含める）
         if (drawLine == null)
@@ -49,12 +55,32 @@ public class GameManager : MonoBehaviour
         canvasStart.SetActive(false);
         canvasGame.SetActive(false);
         canvasResult.SetActive(true);
+
+        // ★ここを追加
+        var returnCtrl = FindObjectOfType<ReturnToTrainController>();
+        if (returnCtrl != null)
+        {
+            returnCtrl.ShowReturnGuide();
+        }
+        else
+        {
+            Debug.LogError("❌ ReturnToTrainController が見つからない");
+        }
+
     }
 
     public void ShowResult(float accuracy)
     {
         lastAccuracy = accuracy;
         ShowResult();
+
+        // ★ここが超重要
+        if (returnToTrainController != null)
+        {
+            returnToTrainController.ShowReturnGuide();
+        }
+
+
     }
 
     public void ShowStart()
