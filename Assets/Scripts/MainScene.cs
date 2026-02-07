@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class MainScene : MonoBehaviour
 {
     Joycon joycon;
+    public Transform player; // ← インスペクターで指定
 
     void Start()
     {
@@ -29,31 +30,51 @@ public class MainScene : MonoBehaviour
         }
     }
 
+
     void ChangeScene()
     {
         string currentScene = SceneManager.GetActiveScene().name;
         string nextScene = "";
 
+
+        // 🔽 位置保存は「必ずここ」
+        if (player != null && GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.playerPosition = player.position;
+            Debug.Log("📍 位置保存: " + player.position);
+        }
+
         switch (currentScene)
         {
             case "train0":
+                GameStateManager.Instance.currentSeason = Season.Spring;
                 nextScene = "Talk_Take";
                 break;
+
             case "train1":
+                GameStateManager.Instance.currentSeason = Season.Summer;
                 nextScene = "Talk_Garasu";
                 break;
+
             case "train2":
+                GameStateManager.Instance.currentSeason = Season.Autumn;
                 nextScene = "Talk_Washi";
                 break;
+
             case "train3":
+                GameStateManager.Instance.currentSeason = Season.Winter;
                 nextScene = "Talk_Fude_Suzuri";
                 break;
+
             default:
                 Debug.LogWarning("未定義のシーンからの遷移です: " + currentScene);
                 return;
         }
 
-        Debug.Log("➡ シーン遷移: " + currentScene + " → " + nextScene);
+        Debug.Log(
+            $"➡ シーン遷移: {currentScene} → {nextScene} / Season: {GameStateManager.Instance.currentSeason}"
+        );
+
         SceneManager.LoadScene(nextScene);
     }
 }
