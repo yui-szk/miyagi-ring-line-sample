@@ -30,6 +30,17 @@ public class JoyconFirstPersonWalk : MonoBehaviour
         {
             cameraTransform = Camera.main.transform;
         }
+        
+
+        // ==============================
+        // 🔽 ここを追加（位置復元）
+        // ==============================
+      //  if (GameStateManager.Instance != null)
+        //{
+          //  transform.position = GameStateManager.Instance.playerPosition;
+          //  Debug.Log("🚃 プレイヤー位置を復元: " + transform.position);
+        //}
+
     }
 
     void Update()
