@@ -17,8 +17,8 @@ public class ResultView : MonoBehaviour
 
         if (rankText != null)
             rankText.text = GetRank(acc);
-        if (rankText1 != null)
-            rankText1.text = GetRank(acc);
+      //  if (rankText1 != null)
+        //    rankText1.text = GetRank(acc);
     }
 
     string GetRank(float acc)
