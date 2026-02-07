@@ -5,7 +5,7 @@ public class MassPlaceTreesAvoidMovingTrain : MonoBehaviour
 {
     [Header("Terrain & Tree Settings")]
     public Terrain terrain;
-    public int numberOfTrees = 1000;
+    public int numberOfTrees = 0;
 
     [Header("Train Settings")]
     public GameObject train;
