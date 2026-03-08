@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
@@ -8,6 +8,9 @@ public class FadeManager : MonoBehaviour
     public static FadeManager Instance;
 
     public Image fadeImage;
+
+    [Header("Train SE")]
+    public AudioClip trainDoorSE;
 
     void Awake()
     {
@@ -21,16 +24,24 @@ public class FadeManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // © ‚±‚ê‚ğŒÄ‚Ô
+    // å¤–ã‹ã‚‰å‘¼ã¶
     public void FadeAndLoadScene(string sceneName, float fadeOutTime, float fadeInTime, float waitTime)
     {
         StartCoroutine(Fade(sceneName, fadeOutTime, fadeInTime, waitTime));
     }
 
-    // © ÀÛ‚É“®‚­’†g
     IEnumerator Fade(string sceneName, float fadeOut, float fadeIn, float wait)
     {
-        // ƒtƒF[ƒhƒAƒEƒgi‘¬‚­j
+        // ğŸšƒ é›»è»Šã‚·ãƒ¼ãƒ³åˆ¤å®šï¼ˆã‚¿ã‚°æ–¹å¼ï¼‰
+        if (GameObject.FindGameObjectWithTag("TrainScene") != null)
+        {
+            if (trainDoorSE != null)
+            {
+                AudioSource.PlayClipAtPoint(trainDoorSE, Vector3.zero);
+            }
+        }
+
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
         for (float t = 0; t < fadeOut; t += Time.deltaTime)
         {
             float a = Mathf.Lerp(0f, 1f, t / fadeOut);
@@ -40,13 +51,15 @@ public class FadeManager : MonoBehaviour
 
         fadeImage.color = new Color(0, 0, 0, 1f);
 
+        // å°‘ã—å¾…ã¤
         yield return new WaitForSeconds(wait);
 
+        // ã‚·ãƒ¼ãƒ³ç§»å‹•
         SceneManager.LoadScene(sceneName);
 
         yield return null;
 
-        // ƒtƒF[ƒhƒCƒ“i­‚µ‚ä‚Á‚­‚èj
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
         for (float t = 0; t < fadeIn; t += Time.deltaTime)
         {
             float a = Mathf.Lerp(1f, 0f, t / fadeIn);
