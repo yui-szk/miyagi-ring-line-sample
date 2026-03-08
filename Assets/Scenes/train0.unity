@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b650191f1d27b40baa6bc6e18fa163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  trainBGM: {fileID: 0}
+  trainBGM: {fileID: 8300000, guid: fe578543199b4ff47a1a2bb500bd41b1, type: 3}
 --- !u!4 &555674635
 Transform:
   m_ObjectHideFlags: 0
