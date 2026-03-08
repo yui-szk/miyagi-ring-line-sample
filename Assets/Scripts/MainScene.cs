@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class MainScene : MonoBehaviour
 {
     Joycon joycon;
     public Transform player; // ← インスペクターで指定
     public AudioClip doorSE; // 🚪ドア音
+
+    public float sceneChangeDelay = 2.0f; // ⏳ シーン移動までの待ち時間
+
 
     void Start()
     {
@@ -27,12 +31,12 @@ public class MainScene : MonoBehaviour
         if (joycon.GetButtonDown(Joycon.Button.DPAD_RIGHT))
         {
             Debug.Log("🎮 Aボタン押された");
-            ChangeScene();
+            StartCoroutine(ChangeScene());
         }
     }
 
 
-    void ChangeScene()
+    IEnumerator ChangeScene()
     {
         // 🚪ドア音
         if (SEManager.Instance != null)
@@ -40,11 +44,15 @@ public class MainScene : MonoBehaviour
             SEManager.Instance.PlaySE(doorSE);
         }
 
+        // ⏳待ち時間
+        yield return new WaitForSeconds(sceneChangeDelay);
+
+
         string currentScene = SceneManager.GetActiveScene().name;
         string nextScene = "";
 
 
-        // 🔽 位置保存は「必ずここ」
+        // 🔽 位置保存
         if (player != null && GameStateManager.Instance != null)
         {
             GameStateManager.Instance.playerPosition = player.position;
@@ -75,7 +83,7 @@ public class MainScene : MonoBehaviour
 
             default:
                 Debug.LogWarning("未定義のシーンからの遷移です: " + currentScene);
-                return;
+                yield break;
         }
 
         Debug.Log(
