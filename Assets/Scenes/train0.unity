@@ -530,7 +530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeImage: {fileID: 693917414}
   fadeOutTime: 1
-  darkTime: 2.5
+  darkTime: 3.5
   fadeInTime: 1
   tunnelAudio: {fileID: 0}
   nextSceneName: Scene1
