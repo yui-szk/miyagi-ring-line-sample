@@ -943,6 +943,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
+      propertyPath: resultBGM
+      value: 
+      objectReference: {fileID: 8300000, guid: 93ca6c7cad5d5574a80d64d8dd85c316, type: 3}
+    - target: {fileID: 5444931090374577769, guid: b0613270fa7997a42968fad40da7f337, type: 3}
       propertyPath: canvasGame
       value: 
       objectReference: {fileID: 2073754742}
