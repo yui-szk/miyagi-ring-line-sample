@@ -5,6 +5,7 @@ public class MainScene : MonoBehaviour
 {
     Joycon joycon;
     public Transform player; // ← インスペクターで指定
+    public AudioClip doorSE; // 🚪ドア音
 
     void Start()
     {
@@ -33,6 +34,12 @@ public class MainScene : MonoBehaviour
 
     void ChangeScene()
     {
+        // 🚪ドア音
+        if (SEManager.Instance != null)
+        {
+            SEManager.Instance.PlaySE(doorSE);
+        }
+
         string currentScene = SceneManager.GetActiveScene().name;
         string nextScene = "";
 
