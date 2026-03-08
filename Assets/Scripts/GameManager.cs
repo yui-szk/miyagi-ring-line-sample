@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     [Header("Return To Train")]
     public ReturnToTrainController returnToTrainController;
 
+    //------------------------------------------------------------
+    [Header("BGM")]
+    public AudioClip resultBGM;
+    //------------------------------------------------------------
 
     void Awake()
     {
@@ -55,6 +59,12 @@ public class GameManager : MonoBehaviour
         canvasStart.SetActive(false);
         canvasGame.SetActive(false);
         canvasResult.SetActive(true);
+
+        // 🎵 リザルトBGM
+        if (BGMManager.Instance != null && resultBGM != null)
+        {
+            BGMManager.Instance.PlayBGM(resultBGM);
+        }
 
         // ★ここを追加
         var returnCtrl = FindObjectOfType<ReturnToTrainController>();
