@@ -7,7 +7,7 @@ public class ResultSceneManager : MonoBehaviour
     [Header("Score UI")]
     public TextMeshProUGUI scoreText;
 
-    [Header("Slide Root（スライドさせる親）")]
+    [Header("Slide Root")]
     public RectTransform slideRoot;
     public float slideDistance = 1920f;
     public float slideDuration = 1.0f;
@@ -28,42 +28,52 @@ public class ResultSceneManager : MonoBehaviour
     public Vector3 highCameraPos = new Vector3(0, 2, -10);
     public float cameraMoveDuration = 1.0f;
 
+    [Header("Result Sounds")]
+    public AudioSource audioSource;
+    public AudioClip lowScoreSound;
+    public AudioClip midScoreSound;
+    public AudioClip highScoreSound;
+    public float resultSoundDelay = 0f;
+
+    [Header("BGM Volume")]
+    [Range(0f, 1f)]
+    public float resultBgmVolume = 0.2f;
+
     void Start()
     {
-        // ---------- 初期化 ----------
+
+        if (BGMManager.Instance != null)
+        {
+            BGMManager.Instance.SetVolume(0.3f);
+        }
+
         scoreText.gameObject.SetActive(false);
 
         if (lowScoreObj != null) lowScoreObj.SetActive(false);
         if (midScoreObj != null) midScoreObj.SetActive(false);
         if (highScoreObj != null) highScoreObj.SetActive(false);
 
-        // スコア文字設定（まだ表示しない）
         scoreText.text = GameManager_Sand.FinalScore.ToString();
+
+
 
         StartCoroutine(ResultSequence());
     }
 
-    // =============================
     IEnumerator ResultSequence()
     {
-        // ① 少し待つ
         yield return new WaitForSeconds(0.8f);
 
-        // ② 数字表示 → ドンッ
         scoreText.gameObject.SetActive(true);
         yield return StartCoroutine(PunchFontSize(scoreText));
 
-        // ③ 間
         yield return new WaitForSeconds(0.5f);
 
-        // ④ スライド
         yield return StartCoroutine(Slide());
 
-        // ⑤ スコア別表示＆カメラ演出
         ShowResultByScore();
     }
 
-    // =============================
     void ShowResultByScore()
     {
         int score = GameManager_Sand.FinalScore;
@@ -74,6 +84,7 @@ public class ResultSceneManager : MonoBehaviour
                 highScoreObj.SetActive(true);
 
             StartCoroutine(MoveCamera(highCameraPos));
+            StartCoroutine(PlayResultSound(highScoreSound));
         }
         else if (score >= midScoreBorder)
         {
@@ -81,6 +92,7 @@ public class ResultSceneManager : MonoBehaviour
                 midScoreObj.SetActive(true);
 
             StartCoroutine(MoveCamera(midCameraPos));
+            StartCoroutine(PlayResultSound(midScoreSound));
         }
         else
         {
@@ -88,35 +100,45 @@ public class ResultSceneManager : MonoBehaviour
                 lowScoreObj.SetActive(true);
 
             StartCoroutine(MoveCamera(lowCameraPos));
+            StartCoroutine(PlayResultSound(lowScoreSound));
         }
     }
 
-    // =============================
+    IEnumerator PlayResultSound(AudioClip clip)
+    {
+        if (audioSource == null || clip == null) yield break;
+
+        yield return new WaitForSeconds(resultSoundDelay);
+
+        audioSource.PlayOneShot(clip);
+    }
+
     IEnumerator Slide()
     {
         Vector2 startPos = slideRoot.anchoredPosition;
         Vector2 endPos = startPos + Vector2.left * slideDistance;
 
         float t = 0f;
+
         while (t < slideDuration)
         {
             t += Time.deltaTime;
             slideRoot.anchoredPosition =
                 Vector2.Lerp(startPos, endPos, t / slideDuration);
+
             yield return null;
         }
 
         slideRoot.anchoredPosition = endPos;
     }
 
-    // =============================
-    // Scaleを触らず、fontSizeでドンッ
     IEnumerator PunchFontSize(TextMeshProUGUI text)
     {
         float baseSize = text.fontSize;
         float bigSize = baseSize * 1.3f;
 
         float t = 0f;
+
         while (t < 0.2f)
         {
             t += Time.deltaTime;
@@ -125,6 +147,7 @@ public class ResultSceneManager : MonoBehaviour
         }
 
         t = 0f;
+
         while (t < 0.1f)
         {
             t += Time.deltaTime;
@@ -135,19 +158,21 @@ public class ResultSceneManager : MonoBehaviour
         text.fontSize = baseSize;
     }
 
-    // =============================
     IEnumerator MoveCamera(Vector3 targetPos)
     {
         if (resultCamera == null) yield break;
 
         Vector3 startPos = resultCamera.transform.position;
+
         float t = 0f;
 
         while (t < cameraMoveDuration)
         {
             t += Time.deltaTime;
+
             resultCamera.transform.position =
                 Vector3.Lerp(startPos, targetPos, t / cameraMoveDuration);
+
             yield return null;
         }
 
