@@ -35,4 +35,13 @@ public class BGMManager : MonoBehaviour
     {
         bgmSource.Stop();
     }
+
+    public void SetVolume(float volume)
+    {
+        if (bgmSource != null)
+        {
+            bgmSource.volume = volume;
+        }
+    }
+
 }
