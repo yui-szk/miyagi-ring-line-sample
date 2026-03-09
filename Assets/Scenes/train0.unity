@@ -6082,6 +6082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MainScene
   player: {fileID: 0}
   doorSE: {fileID: 8300000, guid: efb523fd67388b343b10fb8f03debe79, type: 3}
+  sceneChangeDelay: 4
 --- !u!4 &724654183
 Transform:
   m_ObjectHideFlags: 0
@@ -7398,6 +7399,7 @@ MonoBehaviour:
   speed: 1
   lookAhead: 0.02
   turnSpeed: 5
+  deceleration: 0.5
 --- !u!4 &2110445511 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9045756160304318344, guid: 5d62bd9db205d4a1ab9c8286b8ba4a1d, type: 3}
