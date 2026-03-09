@@ -12,13 +12,15 @@ public class GameManager_Sand : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
-    public GameObject startUI;   // START! 表示
+    public GameObject startUI;
     public GameObject endUI;
 
     [Header("Objects")]
     public SandSpawner sandSpawner;
 
-    // ===== 結果用 =====
+    [Header("Game BGM")]
+    [SerializeField] AudioClip gameBGM;
+
     public static int FinalScore;
 
     int score = 0;
@@ -32,15 +34,24 @@ public class GameManager_Sand : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
+        // 会話BGMを停止してゲームBGMを再生
+        if (BGMManager.Instance != null)
+        {
+            BGMManager.Instance.StopBGM();
+            BGMManager.Instance.PlayBGM(gameBGM);
+        }
+
         gameActive = false;
         currentTime = timeLimit;
 
-        // 砂は最初止める
         if (sandSpawner != null)
             sandSpawner.StopSpawn();
 
@@ -68,17 +79,14 @@ public class GameManager_Sand : MonoBehaviour
         }
     }
 
-    // =============================
     public void StartGame()
     {
         gameActive = true;
         currentTime = timeLimit;
 
-        // START! 表示
         if (startUI != null)
             startUI.SetActive(true);
 
-        // ★ ここが最重要：砂を開始
         if (sandSpawner != null)
             sandSpawner.StartSpawn();
 
@@ -94,7 +102,6 @@ public class GameManager_Sand : MonoBehaviour
             startUI.SetActive(false);
     }
 
-    // =============================
     public void AddScore(int amount = 1)
     {
         if (!gameActive) return;
@@ -115,12 +122,10 @@ public class GameManager_Sand : MonoBehaviour
             timerText.text = "Time : " + Mathf.CeilToInt(currentTime);
     }
 
-    // =============================
     void FinishGame()
     {
         gameActive = false;
 
-        // 砂を止める
         if (sandSpawner != null)
             sandSpawner.StopSpawn();
 
