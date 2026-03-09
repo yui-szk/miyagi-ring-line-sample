@@ -5,11 +5,13 @@ using System.Collections;
 public class MainScene : MonoBehaviour
 {
     Joycon joycon;
-    public Transform player; // ← インスペクターで指定
-    public AudioClip doorSE; // 🚪ドア音
 
-    public float sceneChangeDelay = 2.0f; // ⏳ シーン移動までの待ち時間
+    public Transform player;
+    public AudioClip doorSE;
 
+    public float sceneChangeDelay = 2.0f;
+
+    bool isChangingScene = false;
 
     void Start()
     {
@@ -27,32 +29,38 @@ public class MainScene : MonoBehaviour
     {
         if (joycon == null) return;
 
-        // Aボタン（JoyconLibでは DPAD_RIGHT）
-        if (joycon.GetButtonDown(Joycon.Button.DPAD_RIGHT))
+        if (!isChangingScene && joycon.GetButtonDown(Joycon.Button.DPAD_RIGHT))
         {
             Debug.Log("🎮 Aボタン押された");
+
+            isChangingScene = true;
+
             StartCoroutine(ChangeScene());
         }
     }
 
-
     IEnumerator ChangeScene()
     {
-        // 🚪ドア音
+        // 🚃電車減速
+        TrainSpline train = FindObjectOfType<TrainSpline>();
+        if (train != null)
+        {
+            train.StopTrain();
+        }
+
+        yield return new WaitForSeconds(3.5f);
+
+        // 🚪ドアSE
         if (SEManager.Instance != null)
         {
             SEManager.Instance.PlaySE(doorSE);
         }
 
-        // ⏳待ち時間
         yield return new WaitForSeconds(sceneChangeDelay);
-
 
         string currentScene = SceneManager.GetActiveScene().name;
         string nextScene = "";
 
-
-        // 🔽 位置保存
         if (player != null && GameStateManager.Instance != null)
         {
             GameStateManager.Instance.playerPosition = player.position;
@@ -86,9 +94,7 @@ public class MainScene : MonoBehaviour
                 yield break;
         }
 
-        Debug.Log(
-            $"➡ シーン遷移: {currentScene} → {nextScene} / Season: {GameStateManager.Instance.currentSeason}"
-        );
+        Debug.Log($"➡ シーン遷移: {currentScene} → {nextScene}");
 
         SceneManager.LoadScene(nextScene);
     }
