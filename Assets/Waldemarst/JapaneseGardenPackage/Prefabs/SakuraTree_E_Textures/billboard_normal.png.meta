@@ -86,3 +86,10 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 179492
+  packageName: Japanese Garden Pack
+  packageVersion: 1.1
+  assetPath: Assets/Waldemarst/JapaneseGardenPackage/Prefabs/SakuraTree_E_Textures/billboard_normal.png
+  uploadId: 526701
