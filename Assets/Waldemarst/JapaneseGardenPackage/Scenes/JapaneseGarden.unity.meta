@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 80a26d31b4c6248999e489e0894e9395
 timeCreated: 1598366419
 licenseType: Store
@@ -13,3 +14,11 @@ AssetOrigin:
   packageVersion: 1.1
   assetPath: Assets/Waldemarst/JapaneseGardenPackage/Scenes/JapaneseGarden.unity
   uploadId: 526701
+=======
+guid: d26936c79c33dad41ab84a56a2e1c63d
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> efd0cee69e3151006efcc6bab020933040c38508
