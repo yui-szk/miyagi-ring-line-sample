@@ -40,6 +40,8 @@ public class GameManager2 : MonoBehaviour
         gameActive = false;
         currentTime = timeLimit;
 
+      //  StartGame();
+
         // â‘Ç—ÇÁÇÕç≈èâé~ÇﬂÇÈ
         if (sakuraSpawner != null)
             sakuraSpawner.StopSpawn();
