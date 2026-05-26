@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         // 🎵 リザルトBGM
         if (BGMManager.Instance != null && resultBGM != null)
         {
-            BGMManager.Instance.PlayBGM(resultBGM);
+            BGMManager.Instance.PlayBGM(resultBGM, false);
         }
 
         // ★ここを追加
