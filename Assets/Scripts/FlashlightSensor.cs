@@ -16,7 +16,7 @@ public class FlashlightSensor : MonoBehaviour
             {
 
                 // 🎵 効果音（消える瞬間）0526追加
-                AudioSource.PlayClipAtPoint(hitSound, transform.position);
+                AudioSource.PlayClipAtPoint(hitSound, transform.position, 2.0f);
 
                 // スコアを加算
                 if (ScoreManager.Instance != null)
