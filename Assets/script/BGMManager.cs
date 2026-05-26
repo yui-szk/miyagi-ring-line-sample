@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BGMManager : MonoBehaviour
 {
-    public static BGMManager Instance;   // Å© í«â¡
+    public static BGMManager Instance;
 
     AudioSource bgmSource;
 
@@ -19,15 +19,15 @@ public class BGMManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         bgmSource = GetComponent<AudioSource>();
-        bgmSource.loop = true;
     }
 
-    public void PlayBGM(AudioClip clip)
+    public void PlayBGM(AudioClip clip, bool loop = true)
     {
         // ìØÇ∂BGMÇ»ÇÁçƒê∂ÇµÇ»Ç¢
         if (bgmSource.clip == clip) return;
 
         bgmSource.clip = clip;
+        bgmSource.loop = loop;
         bgmSource.Play();
     }
 
@@ -43,5 +43,4 @@ public class BGMManager : MonoBehaviour
             bgmSource.volume = volume;
         }
     }
-
 }
