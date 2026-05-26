@@ -3,6 +3,7 @@ using UnityEngine;
 public class FlashlightSensor : MonoBehaviour
 {
     public float range = 10f; // ライトの届く距離
+    public AudioClip hitSound; // 0526追加
 
     void Update()
     {
@@ -13,6 +14,10 @@ public class FlashlightSensor : MonoBehaviour
             // 当たったオブジェクトのタグを確認
             if (hit.collider.CompareTag("TargetImage"))
             {
+
+                // 🎵 効果音（消える瞬間）0526追加
+                AudioSource.PlayClipAtPoint(hitSound, transform.position);
+
                 // スコアを加算
                 if (ScoreManager.Instance != null)
                 {
