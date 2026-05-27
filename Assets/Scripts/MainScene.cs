@@ -6,6 +6,8 @@ public class MainScene : MonoBehaviour
 {
     Joycon joycon;
 
+    [SerializeField] AudioClip buttonSE;//0527追加
+
     public Transform player;
     public AudioClip doorSE;
 
@@ -34,6 +36,9 @@ public class MainScene : MonoBehaviour
             Debug.Log("🎮 Aボタン押された");
 
             isChangingScene = true;
+
+            // ★ここ
+            SEManager.Instance.PlaySE(buttonSE);//0527追加
 
             StartCoroutine(ChangeScene());
         }
