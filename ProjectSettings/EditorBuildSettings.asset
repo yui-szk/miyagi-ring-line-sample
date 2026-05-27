@@ -56,6 +56,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Talk_Fude_Suzuri.unity
     guid: a63e2a1ef78e05b4a9379b8c06c61311
+  - enabled: 1
+    path: Assets/Scenes/title.unity
+    guid: b4594a011ce8bd34daaf25f14170de22
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
