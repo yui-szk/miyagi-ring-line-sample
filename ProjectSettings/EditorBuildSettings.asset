@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/washi_result.unity
+    guid: 4ac8be1b1922f8a4e8da0a83e0413503
+  - enabled: 1
     path: Assets/Scenes/train-scene.unity
     guid: 29601747f04aa4442ae2a957cb2b7a6e
   - enabled: 1
