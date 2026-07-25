@@ -60,6 +60,9 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public int score = 0;
 
+    // ★追加
+    public static int FinalScore = 0;
+
     // ↓ 追加 ここから
     [Header("Timer")]
     public float timeLimit = 60f;
@@ -70,12 +73,28 @@ public class ScoreManager : MonoBehaviour
     private bool isGameOver = false;
     // ↑ 追加 ここまで
 
-    void Awake() { /* 変更なし */ }
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        // 既存コード（scoreText の取得）はそのまま
-
+        if (scoreText == null)
+        {
+            GameObject textObj = GameObject.Find("ScoreText");
+            if (textObj != null)
+            {
+                scoreText = textObj.GetComponent<TextMeshProUGUI>();
+            }
+        }
         // ↓ 追加
         timeRemaining = timeLimit;
         UpdateTimerText();
@@ -92,6 +111,10 @@ public class ScoreManager : MonoBehaviour
         {
             timeRemaining = 0f;
             isGameOver = true;
+
+            // ★追加
+            FinalScore = score;
+
             UpdateTimerText();
             Debug.Log("⏰ 時間切れ！シーン遷移: " + nextSceneName);
             SceneManager.LoadScene(nextSceneName);
@@ -102,10 +125,22 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void AddScore(int amount) { /* 変更なし */ }
-    void UpdateScoreText() { /* 変更なし */ }
+    public void AddScore(int amount)
+    {
+        score += amount;
+        UpdateScoreText();
+    }
 
-    // ↓ 追加
+    void UpdateScoreText()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score;
+        }
+
+        Debug.Log("Current Score: " + score);
+    }
+
     void UpdateTimerText()
     {
         if (timerText != null)
