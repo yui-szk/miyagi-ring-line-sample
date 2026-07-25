@@ -64,7 +64,7 @@ public class ScoreManager : MonoBehaviour
     [Header("Timer")]
     public float timeLimit = 60f;
     public TextMeshProUGUI timerText;
-    public string nextSceneName = "Talk_Washi";
+    public string nextSceneName = "washi_result";
 
     private float timeRemaining;
     private bool isGameOver = false;
