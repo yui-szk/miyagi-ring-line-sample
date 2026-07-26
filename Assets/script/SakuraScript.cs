@@ -6,6 +6,9 @@ public class SakuraScript : MonoBehaviour
     public string vesselTag = "Vessel";
     public string groundTag = "Ground";
 
+    [Header("獲得スコア")]
+    public int score = 1;   // ← 通常は1点、特別な花びらは50点
+
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Hit : " + other.name + " tag = " + other.tag);
@@ -16,10 +19,9 @@ public class SakuraScript : MonoBehaviour
 
             Destroy(gameObject);
 
-            // ★ GameManager2 を使う
             if (GameManager2.Instance != null)
             {
-                GameManager2.Instance.AddScore(1);
+                GameManager2.Instance.AddScore(score);
             }
         }
         else if (other.CompareTag(groundTag))
