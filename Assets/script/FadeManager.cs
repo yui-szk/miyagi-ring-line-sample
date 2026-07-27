@@ -7,7 +7,12 @@ public class FadeManager : MonoBehaviour
 {
     public static FadeManager Instance;
 
+    [Header("Fade")]
     public Image fadeImage;
+
+    [Header("Sound")]
+    public AudioSource audioSource;
+    public AudioClip tunnelSE;
 
     void Awake()
     {
@@ -21,16 +26,22 @@ public class FadeManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // ← これを呼ぶ
+    // フェード付きシーン遷移
     public void FadeAndLoadScene(string sceneName, float fadeOutTime, float fadeInTime, float waitTime)
     {
         StartCoroutine(Fade(sceneName, fadeOutTime, fadeInTime, waitTime));
     }
 
-    // ← 実際に動く中身
     IEnumerator Fade(string sceneName, float fadeOut, float fadeIn, float wait)
     {
-        // フェードアウト（速く）
+        // トンネル音を再生
+        if (audioSource != null && tunnelSE != null)
+        {
+            audioSource.clip = tunnelSE;
+            audioSource.Play();
+        }
+
+        // フェードアウト
         for (float t = 0; t < fadeOut; t += Time.deltaTime)
         {
             float a = Mathf.Lerp(0f, 1f, t / fadeOut);
@@ -40,13 +51,16 @@ public class FadeManager : MonoBehaviour
 
         fadeImage.color = new Color(0, 0, 0, 1f);
 
+        // 真っ暗のまま待機
         yield return new WaitForSeconds(wait);
 
+        // シーン切り替え
         SceneManager.LoadScene(sceneName);
 
+        // シーン読み込み待ち
         yield return null;
 
-        // フェードイン（少しゆっくり）
+        // フェードイン
         for (float t = 0; t < fadeIn; t += Time.deltaTime)
         {
             float a = Mathf.Lerp(1f, 0f, t / fadeIn);
@@ -55,5 +69,11 @@ public class FadeManager : MonoBehaviour
         }
 
         fadeImage.color = new Color(0, 0, 0, 0f);
+
+        // トンネル音を停止
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 }
