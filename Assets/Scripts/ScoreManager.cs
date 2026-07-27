@@ -65,7 +65,7 @@ public class ScoreManager : MonoBehaviour
 
     // ↓ 追加 ここから
     [Header("Timer")]
-    public float timeLimit = 60f;
+    public float timeLimit = 40f;
     public TextMeshProUGUI timerText;
     public string nextSceneName = "washi_result";
 
