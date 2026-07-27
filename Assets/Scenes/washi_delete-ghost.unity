@@ -1265,6 +1265,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
   scoreText: {fileID: 447187726}
   score: 0
+  timeLimit: 30
+  timerText: {fileID: 0}
+  nextSceneName: washi_result
 --- !u!4 &1191780672
 Transform:
   m_ObjectHideFlags: 0
@@ -1977,7 +1980,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 1815637906}
-  m_PlaneDistance: 5
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
