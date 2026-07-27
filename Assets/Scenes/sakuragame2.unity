@@ -2946,8 +2946,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  minX: -3
-  maxX: 3
+  minX: -4
+  maxX: 4.5
 --- !u!1001 &604481707
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6721,7 +6721,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3295833489894071664, guid: 59adcf7902d56d1419fcb2aea3bd9b77, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.6
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 3295833489894071664, guid: 59adcf7902d56d1419fcb2aea3bd9b77, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6769,11 +6769,15 @@ PrefabInstance:
       objectReference: {fileID: 2075210694}
     - target: {fileID: 6903286151772317136, guid: 59adcf7902d56d1419fcb2aea3bd9b77, type: 3}
       propertyPath: vesselRangeX
-      value: 3.3
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 6903286151772317136, guid: 59adcf7902d56d1419fcb2aea3bd9b77, type: 3}
       propertyPath: vesselRangeZ
-      value: 0.5
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903286151772317136, guid: 59adcf7902d56d1419fcb2aea3bd9b77, type: 3}
+      propertyPath: specialInterval
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6903286151772317136, guid: 59adcf7902d56d1419fcb2aea3bd9b77, type: 3}
       propertyPath: specialPetalPrefab
